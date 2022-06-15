@@ -1,6 +1,7 @@
 <?php
 include 'global/config.php';
 include 'global/conexion.php';
+include 'carrito.php';
 ?>
 
 <!DOCTYPE html>
@@ -37,33 +38,63 @@ include 'global/conexion.php';
     <br/>
     <br/>
     <div class="container">
-        <br>
+        <br/>
             <div class="alert alert-success">
-                Pantalla de mensajes
+                <?php echo $mensaje; ?>
                 <a href="#" class="badge badge-success">>Ver carrito</a>
             </div>
             <div class="row">
-                <div class="col-3">
-                    <img 
-                    title="Producto 1"
-                    alt="Productos"
-                    class="card-img-top"
-                    src="https://www.mcaelectronics.es/wp-content/uploads/2019/09/Reparacion-placas-electronicas-condensadores-768x432.jpg">
-                    <div class="card-body">
-                        <h5 class="card-title">$300.00</h5>
-                        <p class="card-text">Descrip</p>
+                <?php 
+                    $sentencia=$pdo->prepare("SELECT * FROM tblproductos");
+                    $sentencia->execute();
+                    $listaProductos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+                <?php foreach ($listaProductos as $producto) { ?>
+            
+            
+                    <div class="col-3">
+                        <div class="card">
+                            <img 
+                            title="<?php echo $producto['Nombre'];?>"
+                            alt="<?php echo $producto['Nombre'];?>"
+                            class="card-img-top"
+                            src="<?php echo $producto['Imagen'];?>"
+                            data-toggle="popover"
+                            data-trigger="hover"
+                            data-content="<?php echo $producto['Descripcion'];?>"
+                        
+                            >
+                            
+                            <div class="card-body">
+                                <span><?php echo $producto['Nombre'];?></sapn>
+                                <h5 class="card-title">$<?php echo $producto['Precio'];?></h5>
+                                <p class="card-text">Descrip</p>
 
-                        <button class="btn btn-primary"
-                        name="btnAccion" 
-                        value="Agregar" 
-                        type="submit"
-                        >
-                        Agregar al carrito
-                        </button>
+                                <form action="" method="post">
+                                    <input type="text" name="id" id="id" value="<?php echo openssl_encrypt($producto['ID'],COD,KEY);?>">
+                                    <input type="text" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['Nombre'],COD,KEY);?>">
+                                    <input type="text" name="precio" id="precio" value="<?php echo openssl_encrypt($producto['Precio'],COD,KEY);?>">
+                                    <input type="text" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
 
-                </div>
+                                    <button class="btn btn-primary"
+                                    name="btnAccion" 
+                                    value="Agregar" 
+                                    type="submit"
+                                    >
+                                    Agregar al carrito
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>    
+                <?php } ?>
             </div>
         
     </div>
+    <script>
+        $(function(){
+            $('[data-toggle="popover"]').popover()
+        });
+    </script>
 </body>
 </html>
