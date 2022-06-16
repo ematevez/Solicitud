@@ -2,47 +2,16 @@
 include 'global/config.php';
 include 'global/conexion.php';
 include 'carrito.php';
+include 'templates/cabecera.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scake=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tienda</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand"> SoftDihn.</a>
-        <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="my-nav" class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.php">Home</a>
-                </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Carrito(0)</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <br/>
-    <br/>
-    <div class="container">
-        <br/>
+<br>
+        <?php if($mensaje!=""){?>
             <div class="alert alert-success">
                 <?php echo $mensaje; ?>
-                <a href="#" class="badge badge-success">>Ver carrito</a>
+                <a href="mostrarCarrito.php" class="badge badge-success">>Ver carrito</a>
             </div>
+        <?php }?>
             <div class="row">
                 <?php 
                     $sentencia=$pdo->prepare("SELECT * FROM tblproductos");
@@ -62,7 +31,9 @@ include 'carrito.php';
                             data-toggle="popover"
                             data-trigger="hover"
                             data-content="<?php echo $producto['Descripcion'];?>"
-                        
+                            width="507px"
+                            height="200px"
+
                             >
                             
                             <div class="card-body">
@@ -71,10 +42,10 @@ include 'carrito.php';
                                 <p class="card-text">Descrip</p>
 
                                 <form action="" method="post">
-                                    <input type="text" name="id" id="id" value="<?php echo openssl_encrypt($producto['ID'],COD,KEY);?>">
-                                    <input type="text" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['Nombre'],COD,KEY);?>">
-                                    <input type="text" name="precio" id="precio" value="<?php echo openssl_encrypt($producto['Precio'],COD,KEY);?>">
-                                    <input type="text" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
+                                    <input type="hidden" name="id" id="id" value="<?php echo openssl_encrypt($producto['ID'],COD,KEY);?>">
+                                    <input type="hidden" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['Nombre'],COD,KEY);?>">
+                                    <input type="hidden" name="precio" id="precio" value="<?php echo openssl_encrypt($producto['Precio'],COD,KEY);?>">
+                                    <input type="hidden" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
 
                                     <button class="btn btn-primary"
                                     name="btnAccion" 
@@ -96,5 +67,5 @@ include 'carrito.php';
             $('[data-toggle="popover"]').popover()
         });
     </script>
-</body>
-</html>
+
+<?php include 'templates/pie.php'; ?>

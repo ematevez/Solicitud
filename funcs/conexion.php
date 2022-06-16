@@ -1,7 +1,7 @@
 <?php
 $contrasena = "";
 $usuario = "root";
-$nombre_bd = "id14827438_basedatosgeneral";
+$nombre_bd = "crudbd";
 
 $mysqli = new mysqli('localhost',$usuario,$contrasena,$nombre_bd);
 
