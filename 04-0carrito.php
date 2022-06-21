@@ -73,12 +73,9 @@
             ?> 
 
             <!-- fin alerta -->
-            <div class="card">
-                <div class="card-header">
-                    Listado  de material ingresado
-                </div>
-                <div class="p-4">
-                    <table class="table align-middle">
+            <div >
+                       
+                    <table class="table table-dark">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -110,34 +107,10 @@
                         </tbody>
                     </table>
                     
-                </div>
+                
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Ingresar datos:
-                </div>
-                <form class="p-4" method="POST" action="033registrar_mat.php">
-                    <div class="mb-3">
-                        <label class="form-label">Material-Nombre-Servicio:    (100 caracteres max)</label>
-                        <input type="text" class="form-control" name="txtMaterial" autofocus required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Observacion:    (150 caracteres max)</label>
-                        <input type="text" class="form-control" name="txtObs" autofocus required>
-                    </div>
-                    <div class="d-grid">
-                        <input type="hidden" name="oculto" value="1">
-                        <input type="submit" class="btn btn-primary" style="margin: 10px" value="Registrar">
-                    </div>
-                    
-                     <div class="d-grid">    
-                        <a href="welcome1.php" align="center" class="btn btn-primary" style="margin: 10px">Volver</a>   
-                    </div>
-                </form>
-            </div>
-        </div>
+        
     </div>
 </div>
 
